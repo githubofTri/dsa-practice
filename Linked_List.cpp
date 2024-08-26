@@ -23,17 +23,50 @@ Node* addNode(Node *node, int x){
   return nodeToAdd;
 }
 
-//đổi val của node từ a thành giá trị b 
-Node* convertNode(Node *head, int targetNumber, int numberToConvert){
-  Node *temp = head;
-  while(temp != nullptr){
-    if(temp->val == targetNumber){
-      temp->val = numberToConvert;
-    }
-    temp = temp->next;  
+//thêm node vào danh sách
+Node* headInsert(Node* head, int valueToInsert){
+  Node* nodeToInsert = new Node(valueToInsert);
+  nodeToInsert->next = head;
+  return nodeToInsert;
+}
+
+// thêm node vào cuối dánh sách
+Node* tailInsert(Node* head, int valueToInsert){
+  Node* temp = head;
+  while(temp->next != nullptr){
+    temp = temp->next;
   }
+  Node* nodeToInsert = new Node(valueToInsert);
+  temp->next = nodeToInsert;
   return head;
 }
+
+// thêm node vào vị trí khác đầu và cuối 
+Node* atIndexInsert(Node* head, int index, int valueToInsert){
+  Node* nodeToInsert = new Node(valueToInsert);
+  int movingIndex = 0;
+  Node* temp = head;
+  while(movingIndex != index-1 && temp != nullptr){
+    temp = temp->next;
+    movingIndex++;
+  }
+  nodeToInsert->next = temp->next;
+  temp->next = nodeToInsert;
+  return head;
+}
+
+
+// //đổi val của node từ a thành giá trị b 
+// Node* convertNode(Node *head, int targetNumber, int numberToConvert){
+//   Node *temp = head;
+//   while(temp != nullptr){
+//     if(temp->val == targetNumber){
+//       temp->val = numberToConvert;
+//     }
+//     temp = temp->next;  
+//   }
+//   return head;
+// }
 
 int main(){
  int n, x, k, l;
@@ -46,11 +79,20 @@ int main(){
    temp = addNode(temp, x);
  }
  
- //doi gia tri
- cin >> k;
- cin >> l;
- head = convertNode(head, k, l);
+// //doi gia tri
+// cin >> k;
+// cin >> l;
+// head = convertNode(head, k, l);
  
+ 
+ // chèn 
+  cin >> k >> l;
+  if(k == 0){
+    head = headInsert(head, l);
+  }else if(k == n){
+    head = tailInsert(head, l);
+  }else head = atIndexInsert(head, k, l);
+  
  //in
  print(head);
  
