@@ -23,37 +23,37 @@ Node* addNode(Node *node, int x){
   return nodeToAdd;
 }
 
-//thêm node vào danh sách
-Node* headInsert(Node* head, int valueToInsert){
-  Node* nodeToInsert = new Node(valueToInsert);
-  nodeToInsert->next = head;
-  return nodeToInsert;
-}
+// //thêm node vào danh sách
+// Node* headInsert(Node* head, int valueToInsert){
+//   Node* nodeToInsert = new Node(valueToInsert);
+//   nodeToInsert->next = head;
+//   return nodeToInsert;
+// }
 
-// thêm node vào cuối dánh sách
-Node* tailInsert(Node* head, int valueToInsert){
-  Node* temp = head;
-  while(temp->next != nullptr){
-    temp = temp->next;
-  }
-  Node* nodeToInsert = new Node(valueToInsert);
-  temp->next = nodeToInsert;
-  return head;
-}
+// // thêm node vào cuối dánh sách
+// Node* tailInsert(Node* head, int valueToInsert){
+//   Node* temp = head;
+//   while(temp->next != nullptr){
+//     temp = temp->next;
+//   }
+//   Node* nodeToInsert = new Node(valueToInsert);
+//   temp->next = nodeToInsert;
+//   return head;
+// }
 
-// thêm node vào vị trí khác đầu và cuối 
-Node* atIndexInsert(Node* head, int index, int valueToInsert){
-  Node* nodeToInsert = new Node(valueToInsert);
-  int movingIndex = 0;
-  Node* temp = head;
-  while(movingIndex != index-1 && temp != nullptr){
-    temp = temp->next;
-    movingIndex++;
-  }
-  nodeToInsert->next = temp->next;
-  temp->next = nodeToInsert;
-  return head;
-}
+// // thêm node vào vị trí khác đầu và cuối 
+// Node* atIndexInsert(Node* head, int index, int valueToInsert){
+//   Node* nodeToInsert = new Node(valueToInsert);
+//   int movingIndex = 0;
+//   Node* temp = head;
+//   while(movingIndex != index-1 && temp != nullptr){
+//     temp = temp->next;
+//     movingIndex++;
+//   }
+//   nodeToInsert->next = temp->next;
+//   temp->next = nodeToInsert;
+//   return head;
+// }
 
 
 // //đổi val của node từ a thành giá trị b 
@@ -68,8 +68,42 @@ Node* atIndexInsert(Node* head, int index, int valueToInsert){
 //   return head;
 // }
 
+// xóa phần tử ở đầu 
+Node* headRemove(Node* head){
+  Node* temp = new Node(0);
+  temp = head->next;
+  delete head;
+  return temp;
+}
+
+// xóa phần tử ở cuối danh sách 
+Node* tailRemove(Node* head){
+  Node* temp = head;
+  while(temp->next->next != NULL){
+    temp = temp->next;
+  }
+  delete temp->next;
+  temp->next = NULL;
+  return head;
+}
+
+// xóa phần tử tại vị trí khác đầu cuối 
+Node* indexRemove(Node* head, int index){
+  int movingIndex = 0;
+  Node* container = new Node(0);
+  Node* temp = head;
+  while(movingIndex != index-1 && temp->next != NULL){
+    temp = temp->next;
+    movingIndex++;
+  }
+  container = temp->next->next;
+  delete temp->next;
+  temp->next = container;
+  return head;
+}
+
 int main(){
- int n, x, k, l;
+ int n, x, k;
  cin >> n;
  cin >> x;
  Node* head = new Node(x);
@@ -85,14 +119,23 @@ int main(){
 // head = convertNode(head, k, l);
  
  
- // chèn 
-  cin >> k >> l;
-  if(k == 0){
-    head = headInsert(head, l);
-  }else if(k == n){
-    head = tailInsert(head, l);
-  }else head = atIndexInsert(head, k, l);
+// // chèn 
+//   cin >> k >> l;
+//   if(k == 0){
+//     head = headInsert(head, l);
+//   }else if(k == n){
+//     head = tailInsert(head, l);
+//   }else head = atIndexInsert(head, k, l);
   
+  // xóa dữ liệu
+  cin >> k;
+  if(k == 0){
+    head = headRemove(head);
+  }else if(k == n-1){
+    tailRemove(head);
+  }else head = indexRemove(head, k);
+ 
+ 
  //in
  print(head);
  
